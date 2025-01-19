@@ -22,7 +22,6 @@ def to_registr(mess_id):
     mess = bot.send_message(mess_id, 'Скажите, кто Вы:', reply_markup=button_start())
     bot.register_next_step_handler(mess, choose_categ)
 
-
 def return_to_main(mess_id):
     users_data, teachers_data = get_user_from_db()
     all_data = {**users_data, **teachers_data}
@@ -89,8 +88,7 @@ def register_in_db(user):
         bot.send_message(user[0], 'Спасибо! Я запомнил')
         return_to_main(user[0])
     except:
-        bot.send_message(user[0], 'Извините, возникла ошибка. Сообщите об этом тех. поддержке через кнопку ниже')
-    # Допиши
+        bot.send_message(user[0], 'Извините, возникла ошибка. Сообщите об этом тех. поддержке через кнопку ниже', reply_markup=button_to_support())
 
 def get_user_from_db():
     cur.execute("""SELECT user_id, categories, reply, username, form FROM users""")
@@ -280,8 +278,6 @@ def choose_user_by_bot(message, send_user, type_message):
     else:
         return_to_main(mess_id)
 
-
-
 @bot.message_handler(func=lambda message: message.text == 'Изменить расписание')
 def type_schedule(message):
     mess_id = message.chat.id
@@ -339,8 +335,6 @@ def get_schedule(message):
         else:
             bot.send_message(message.chat.id, 'Извините, я не понимаю Вас')
     return_to_main(mess_id)
-
-
 
 @bot.message_handler(func=lambda message: message.text == 'Назад')
 def ret(message):
